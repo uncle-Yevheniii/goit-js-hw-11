@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page title</title>
-    <link rel="stylesheet" href="./sass/index.scss" />
-    <script type="module" src="./index.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <title>The task is to search for images</title>
   </head>
   <body>
-    <!-- ❗️❗️❗️ Add partials like so for every page -->
-    <include src="./partials/example.html"></include>
+    <div class="form-div">
+      <form class="search-form" id="search-form">
+        <input
+          class="form-input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <button class="form-button" type="submit">Search</button>
+      </form>
+    </div>
+
+    <div class="gallery">
+      <!-- Картки зображень -->
+      <!-- <div class="photo-card">
+        <img src="#" alt="" loading="lazy" />
+        <div class="info">
+          <p class="info-item">
+            <b>Likes</b>
+          </p>
+          <p class="info-item">
+            <b>Views</b>
+          </p>
+          <p class="info-item">
+            <b>Comments</b>
+          </p>
+          <p class="info-item">
+            <b>Downloads</b>
+          </p>
+        </div>
+      </div> -->
+      <div class="div-btn">
+        <button type="button" class="load-more">Load more</button>
+      </div>
+    </div>
+    <script src="index.js" type="module"></script>
   </body>
 </html>
