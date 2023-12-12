@@ -16,7 +16,10 @@ form.addEventListener('submit', onValueSubmit);
 function onValueSubmit(event) {
   event.preventDefault();
 
-  enteredValue = event.currentTarget[0].value;
+  enteredValue = event.currentTarget[0].value.trim();
+  if (enteredValue === '') {
+    return alert('All fields must be filled!');
+  }
   render(enteredValue);
   form.reset();
 }
