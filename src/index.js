@@ -8,6 +8,7 @@ const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loadMore = document.querySelector('.load-more');
 let page = 1;
+let currentSum = 0;
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -15,7 +16,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
 });
 //
-
+loadMore.addEventListener('click', onLoadMore);
 form.addEventListener('submit', onValueSubmit);
 
 function onValueSubmit(event) {
@@ -30,22 +31,21 @@ function onValueSubmit(event) {
   localStorage.setItem('key', enteredValue);
   render();
 
-  loadMore.classList.remove('visibility-hidden');
-  loadMore.addEventListener('click', onLoadMore);
+  //
 
   form.reset();
 }
 
 //
 // Запит на сервер
-async function getGallery(page = 2) {
+async function getGallery(page = 1) {
   const BASE_URL = 'https://pixabay.com/api/';
   const API_KEY = '41201179-9e6e53d17bde192e39b3718f4';
   const q = localStorage.getItem('key');
   const image_type = 'photo';
   const orientation = 'horizontal';
   const safesearch = 'true';
-  const per_page = 4;
+  const per_page = 40;
 
   const queryParams = new URLSearchParams({
     key: API_KEY,
@@ -69,15 +69,14 @@ async function render() {
   try {
     const data = await getGallery(page);
 
-    if (!data.hits.length > 0) {
+    if (!data.hits.length >= 0) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     }
-    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-    console.log(data);
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
 
+    check(data.hits.length, data.totalHits);
     lightbox.refresh();
   } catch (error) {
     console.log('error!', error);
@@ -94,4 +93,15 @@ async function onLoadMore() {
     console.log('error!', error);
   }
   lightbox.refresh();
+}
+function check(current, total) {
+  currentSum += current;
+  if (currentSum >= total) {
+    loadMore.classList.add('visibility-hidden');
+    return Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+  }
+  Notiflix.Notify.success(`Hooray! We found ${currentSum} of ${total} images`);
+  loadMore.classList.remove('visibility-hidden');
 }
