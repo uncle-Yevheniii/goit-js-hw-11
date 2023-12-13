@@ -72,7 +72,7 @@ async function render() {
     const data = await getGallery(page);
     //
     //
-    if (!data.hits.length >= 0) {
+    if (!data.hits.length > 0) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
