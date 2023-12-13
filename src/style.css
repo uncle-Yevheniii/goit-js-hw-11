@@ -69,9 +69,10 @@ body {
   padding-right: 130px;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 50px;
-  justify-content: center;
-  row-gap: 50px;
+  justify-content: space-between;
+  gap: 20px;
+  /* column-gap: 50px;
+  row-gap: 50px; */
   background-color: #f4f4fd;
   padding-top: 20px;
   padding-bottom: 20px;

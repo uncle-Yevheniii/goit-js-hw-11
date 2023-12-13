@@ -15,21 +15,28 @@ form.addEventListener('submit', onValueSubmit);
 
 function onValueSubmit(event) {
   event.preventDefault();
+  gallery.innerHTML = '';
+  localStorage.clear();
 
   enteredValue = event.currentTarget[0].value.trim();
   if (enteredValue === '') {
-    return alert('All fields must be filled!');
+    return Notiflix.Notify.failure('All fields must be filled!');
   }
-  render(enteredValue);
+  localStorage.setItem('key', enteredValue);
+  render();
+
+  loadMore.classList.replace('load-more-hidden', 'load-more');
+  loadMore.addEventListener('click', onLoadMore);
+
   form.reset();
 }
 
 //
 // Запит на сервер
-async function getGallery(page = 1, qValue) {
+async function getGallery(page = 2) {
   const BASE_URL = 'https://pixabay.com/api/';
   const API_KEY = '41201179-9e6e53d17bde192e39b3718f4';
-  const q = qValue;
+  const q = localStorage.getItem('key');
   const image_type = 'photo';
   const orientation = 'horizontal';
   const safesearch = 'true';
@@ -53,9 +60,9 @@ async function getGallery(page = 1, qValue) {
 }
 //
 //
-async function render(qValue) {
+async function render() {
   try {
-    const data = await getGallery(page, qValue);
+    const data = await getGallery(page);
 
     if (!data.hits.length > 0) {
       return Notiflix.Notify.failure(
@@ -65,6 +72,17 @@ async function render(qValue) {
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     console.log(data);
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+  } catch (error) {
+    console.log('error!', error);
+  }
+}
+
+async function onLoadMore() {
+  try {
+    page += 1;
+    console.dir(page);
+
+    const data = await render();
   } catch (error) {
     console.log('error!', error);
   }
