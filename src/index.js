@@ -7,9 +7,13 @@ import { createMarkup } from './markup';
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loadMore = document.querySelector('.load-more');
-const lightbox = null;
 let page = 1;
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
 //
 
 form.addEventListener('submit', onValueSubmit);
@@ -73,11 +77,7 @@ async function render() {
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     console.log(data);
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
-    const lightbox = new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-      captionPosition: 'bottom',
-    });
+
     lightbox.refresh();
   } catch (error) {
     console.log('error!', error);
@@ -93,4 +93,5 @@ async function onLoadMore() {
   } catch (error) {
     console.log('error!', error);
   }
+  lightbox.refresh();
 }
