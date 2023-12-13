@@ -12,21 +12,25 @@ export function createMarkup(arr) {
         downloads,
       }) => `
       <div class="photo-card">
-      <a class="galery-link" href="${largeImageURL}">
-        <img class="gallery__image" src="${webformatURL}" alt="${tags}" width=300 loading="lazy" />
+      <a class="gallery-link" href="${largeImageURL}">
+        <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
       </a>
       <div class="info">
         <p class="info-item">
-          <b>Likes: <br> ${likes}</b>
+          <b>Likes:</b>
+          ${likes}
         </p>
         <p class="info-item">
-          <b>Views: <br> ${views}</b>
+          <b>Views:</b>
+          ${views}
         </p>
         <p class="info-item">
-          <b>Comments: <br> ${comments}</b>
+          <b>Comments:</b>
+          ${comments}
         </p>
         <p class="info-item">
-          <b>Downloads: <br> ${downloads}</b>
+          <b>Downloads:</b>
+          ${downloads}
         </p>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { createMarkup } from './markup';
 
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
-const loadMore = document.querySelector('.load-more-hidden');
+const loadMore = document.querySelector('.load-more');
 let page = 1;
 
 //
@@ -19,14 +19,14 @@ function onValueSubmit(event) {
   localStorage.clear();
   // lightbox.refresh();
 
-  enteredValue = event.currentTarget[0].value.trim();
+  const enteredValue = event.currentTarget[0].value.trim();
   if (enteredValue === '') {
     return Notiflix.Notify.failure('All fields must be filled!');
   }
   localStorage.setItem('key', enteredValue);
   render();
 
-  loadMore.classList.replace('load-more-hidden', 'load-more');
+  loadMore.classList.remove('visibility-hidden');
   loadMore.addEventListener('click', onLoadMore);
 
   const lightbox = new SimpleLightbox('.gallery a', {
