@@ -17,6 +17,7 @@ function onValueSubmit(event) {
   event.preventDefault();
   gallery.innerHTML = '';
   localStorage.clear();
+  // lightbox.refresh();
 
   enteredValue = event.currentTarget[0].value.trim();
   if (enteredValue === '') {
@@ -27,6 +28,12 @@ function onValueSubmit(event) {
 
   loadMore.classList.replace('load-more-hidden', 'load-more');
   loadMore.addEventListener('click', onLoadMore);
+
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
 
   form.reset();
 }
@@ -86,4 +93,5 @@ async function onLoadMore() {
   } catch (error) {
     console.log('error!', error);
   }
+  lightbox.refresh();
 }
