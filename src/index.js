@@ -7,6 +7,7 @@ import { createMarkup } from './markup';
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loadMore = document.querySelector('.load-more');
+const lightbox = null;
 let page = 1;
 
 //
@@ -17,7 +18,6 @@ function onValueSubmit(event) {
   event.preventDefault();
   gallery.innerHTML = '';
   localStorage.clear();
-  // lightbox.refresh();
 
   const enteredValue = event.currentTarget[0].value.trim();
   if (enteredValue === '') {
@@ -28,12 +28,6 @@ function onValueSubmit(event) {
 
   loadMore.classList.remove('visibility-hidden');
   loadMore.addEventListener('click', onLoadMore);
-
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
 
   form.reset();
 }
@@ -79,6 +73,12 @@ async function render() {
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     console.log(data);
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+    const lightbox = new SimpleLightbox('.gallery a', {
+      captionsData: 'alt',
+      captionDelay: 250,
+      captionPosition: 'bottom',
+    });
+    lightbox.refresh();
   } catch (error) {
     console.log('error!', error);
   }
@@ -93,5 +93,4 @@ async function onLoadMore() {
   } catch (error) {
     console.log('error!', error);
   }
-  lightbox.refresh();
 }
