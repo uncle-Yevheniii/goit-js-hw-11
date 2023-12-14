@@ -31,6 +31,7 @@ function onValueSubmit(event) {
   //
   const enteredValue = event.currentTarget[0].value.trim();
   if (enteredValue === '') {
+    loadMore.classList.add('visibility-hidden');
     return Notiflix.Notify.failure('All fields must be filled!');
   }
   localStorage.setItem('key', enteredValue);
@@ -73,6 +74,7 @@ async function render() {
     //
     //
     if (!data.hits.length > 0) {
+      loadMore.classList.add('visibility-hidden');
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
